@@ -3,7 +3,7 @@
 .TracksDataGrid {
   > * {
     &:not(:last-of-type) {
-      border-bottom: 1px solid $lightGrey;
+      border-bottom: 1px solid $border;
     }
   }
 }

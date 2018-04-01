@@ -1,4 +1,11 @@
-export default interface Track {
+export default interface State {
+  isLoading: boolean;
+  search: string;
+  sort: {direction: number, id: string};
+  tracks: SimpleTrack[];
+}
+
+export interface Track {
 
   album: Album;
   artist: Artist;

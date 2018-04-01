@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Component, FormEvent, ChangeEvent } from 'react';
+import { Component, FormEvent, ChangeEvent, MouseEvent } from 'react';
 import * as moment from 'moment';
 import axios from 'axios';
 
 import { Column } from './tracks-data-grid/TracksDataGrid.interfaces';
-import Track, { SimpleTrack } from './App.interfaces';
+import State, { Track, SimpleTrack } from './App.interfaces';
 import SearchForm from './search-form/SearchForm';
 import TracksDataGrid from './tracks-data-grid/TracksDataGrid';
 import './App.scss';
@@ -33,23 +33,22 @@ const COLUMNS: Column[] = [
   }
 ];
 
-export interface State {
-  isLoading: boolean;
-  search: string;
-  tracks: SimpleTrack[];
-}
-
 class App extends Component {
   columns: Column[] = COLUMNS;
   search: string = '';
   state: State = {
     isLoading: true,
     search: 'foo fighters',
+    sort: {
+      direction: -1,
+      id: ''
+    },
     tracks: []
   };
 
   constructor(props: object) {
     super(props);
+    this.handleHeaderClick = this.handleHeaderClick.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
@@ -85,6 +84,20 @@ class App extends Component {
     });
   }
 
+  handleHeaderClick(columnId: string, e: MouseEvent<HTMLDivElement>): void {
+    this.setState((prevState: State) => {
+      return {
+        sort: {
+          direction: -1 * prevState.sort.direction,
+          id: columnId
+        },
+        tracks: prevState.tracks.sort((a: SimpleTrack, b: SimpleTrack) => {
+          return (a[columnId] > b[columnId]) ? prevState.sort.direction : -1 * prevState.sort.direction;
+        })
+      };
+    });
+  }
+
   handleSearchChange(e: ChangeEvent<HTMLInputElement>): void {
     this.setState({search: e.target.value});
   }
@@ -108,7 +121,11 @@ class App extends Component {
         {this.state.isLoading ? (
           <div>Loading...</div>
         ) : (
-          <TracksDataGrid columns={this.columns} rows={this.state.tracks} />
+          <TracksDataGrid 
+            columns={this.columns} 
+            onHeaderClick={this.handleHeaderClick}
+            rows={this.state.tracks} 
+          />
         )}
       </div>
     );
