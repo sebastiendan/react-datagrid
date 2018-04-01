@@ -1,0 +1,9 @@
+@import '../_variables';
+
+.TracksDataGrid {
+  > * {
+    &:not(:last-of-type) {
+      border-bottom: 1px solid $lightGrey;
+    }
+  }
+}

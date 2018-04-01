@@ -13,8 +13,7 @@ app.get('/track', (req, res, next) => {
   const search = req.query.search || '';
 
   request({
-    url: 'https://api.deezer.com/search?q=' + search,
-    rejectUnauthorized: false
+    url: 'https://api.deezer.com/search?&q=' + search
   }, (err, _res, body) => {
     if (err)
       next(err);

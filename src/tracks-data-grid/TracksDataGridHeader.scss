@@ -1,0 +1,8 @@
+.TracksDataGridHeader {
+  white-space: nowrap;
+  
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}

@@ -1,0 +1,27 @@
+.TracksDataGridCell {
+  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  &.cover {
+    width: 5%;
+    min-width: 30px;
+  }
+
+  &.title {
+    width: 30%;
+  }
+
+  &.artist {
+    width: 30%;
+  }
+
+  &.album {
+    width: 25%;
+  }
+
+  &.duration {
+    width: 10%;
+  }
+}
