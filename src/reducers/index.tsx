@@ -32,7 +32,7 @@ export function track(state: StoreState, action: ReactDataGridActions): StoreSta
         sort: {id: action.columnId, direction: -1 * state.sort.direction}, 
         tracks: state.tracks.sort((a: SimpleTrack, b: SimpleTrack) => {
           return a[action.columnId] > b[action.columnId] ? state.sort.direction : -1 * state.sort.direction;
-        })
+        }).slice()
       };
     default:
       return state;
