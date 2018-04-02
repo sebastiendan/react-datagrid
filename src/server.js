@@ -15,10 +15,16 @@ app.get('/track', (req, res, next) => {
   request({
     url: 'https://api.deezer.com/search?&q=' + search
   }, (err, _res, body) => {
+    const _body = JSON.parse(body);
+
     if (err)
       next(err);
-
-    res.send(body);
+    
+    if (_body.error) {
+      res.status(_body.error.code).send({message: _body.error.message});
+    } else {
+      res.send(body);
+    }
   });
 });
 

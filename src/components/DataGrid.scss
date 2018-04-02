@@ -1,6 +1,6 @@
 @import '../_variables';
 
-.TracksDataGrid {
+.DataGrid {
   > * {
     &:not(:last-of-type) {
       border-bottom: 1px solid $border;

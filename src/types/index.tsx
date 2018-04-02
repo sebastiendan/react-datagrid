@@ -1,8 +1,12 @@
-export default interface State {
+export default interface StoreState {
+
+  columns: Column[];
+  error: any;
   isLoading: boolean;
   search: string;
   sort: {direction: number, id: string};
   tracks: SimpleTrack[];
+
 }
 
 export interface Track {
@@ -39,5 +43,26 @@ export interface SimpleTrack {
   duration: string;
   id: number;
   title: string;
+
+}
+
+export interface Cell {
+  
+    id: number;
+    value: string | number;
+  
+}
+
+export interface Column {
+
+  id: string;
+  name: string;
+  type?: string;
+
+}
+
+export interface Row {
+
+  id: number;
 
 }

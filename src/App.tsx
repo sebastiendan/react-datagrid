@@ -1,135 +1,40 @@
 import * as React from 'react';
-import { Component, FormEvent, ChangeEvent, MouseEvent } from 'react';
-import * as moment from 'moment';
-import axios from 'axios';
 
-import { Column } from './tracks-data-grid/TracksDataGrid.interfaces';
-import State, { Track, SimpleTrack } from './App.interfaces';
-import SearchForm from './search-form/SearchForm';
-import TracksDataGrid from './tracks-data-grid/TracksDataGrid';
+import SearchForm from './containers/SearchForm';
+import DataGrid from './containers/DataGrid';
 import './App.scss';
 
-const COLUMNS: Column[] = [
-  {
-    id: 'cover',
-    name: '',
-    type: 'image'
-  },
-  {
-    id: 'title',
-    name: 'Title'
-  },
-  {
-    id: 'artist',
-    name: 'Artist'
-  },
-  {
-    id: 'album',
-    name: 'Album'
-  },
-  {
-    id: 'duration',
-    name: 'Duration'
-  }
-];
+export interface Props {
 
-class App extends Component {
-  columns: Column[] = COLUMNS;
-  search: string = '';
-  state: State = {
-    isLoading: true,
-    search: 'foo fighters',
-    sort: {
-      direction: -1,
-      id: ''
-    },
-    tracks: []
-  };
+  error?: any;
+  isLoading?: boolean;
 
-  constructor(props: object) {
-    super(props);
-    this.handleHeaderClick = this.handleHeaderClick.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-  }
+}
 
-  componentDidMount() {
-    this.getTracks();
-  }
-
-  getTracks() {
-    this.setState({isLoading: true});
-    axios.get('http://localhost:3001/track?search=' + this.state.search)
-    .then(res => {
-      const tracks: SimpleTrack[] = res.data.data.map((track: Track) => {
-        const momentDuration: moment.Duration = moment.duration(track.duration, 's'),
-        simpleTrack: SimpleTrack = {
-          album: track.album.title,
-          artist: track.artist.name,
-          cover: track.album.cover_small,
-          duration: moment(momentDuration.minutes(), 'mm').format('mm') + ':' 
-          + moment(momentDuration.minutes(), 'ss').format('ss'),
-          id: track.id,
-          title: track.title
-        };
-        
-        return simpleTrack;
-      });
-      
-      this.setState({ isLoading: false, tracks: tracks });
-    })
-    .catch(err => {
-      // alert(err);
-      this.setState({isLoading: true});
-    });
-  }
-
-  handleHeaderClick(columnId: string, e: MouseEvent<HTMLDivElement>): void {
-    this.setState((prevState: State) => {
-      return {
-        sort: {
-          direction: -1 * prevState.sort.direction,
-          id: columnId
-        },
-        tracks: prevState.tracks.sort((a: SimpleTrack, b: SimpleTrack) => {
-          return (a[columnId] > b[columnId]) ? prevState.sort.direction : -1 * prevState.sort.direction;
-        })
-      };
-    });
-  }
-
-  handleSearchChange(e: ChangeEvent<HTMLInputElement>): void {
-    this.setState({search: e.target.value});
-  }
-
-  handleSearchSubmit(e: FormEvent<HTMLFormElement>): void {
-    this.getTracks();
-    e.preventDefault();
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Deezer Track Search</h1>
-        </header>
-        <SearchForm 
-          search={this.state.search} 
-          onSearchChange={this.handleSearchChange} 
-          onSearchSubmit={this.handleSearchSubmit}
-        />
-        {this.state.isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <TracksDataGrid 
-            columns={this.columns} 
-            onHeaderClick={this.handleHeaderClick}
-            rows={this.state.tracks} 
-          />
-        )}
+function App(props: Props) {
+  let mainContent: JSX.Element;
+  if (props.error) {
+    mainContent = (
+      <div className="ErrorMessage">
+        Something went wrong: {props.error.response ? props.error.response.data.message : props.error.message}
       </div>
     );
+  } else
+  if (props.isLoading) {
+    mainContent = (<div>Loading...</div>);
+  } else {
+    mainContent = (<DataGrid />);
   }
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1 className="App-title">Deezer Track Search</h1>
+      </header>
+      <SearchForm />
+      {mainContent}
+    </div>
+  );
 }
 
 export default App;
