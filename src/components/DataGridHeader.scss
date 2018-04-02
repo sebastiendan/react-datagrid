@@ -1,8 +1,16 @@
 .DataGridHeader {
+  height: 32px;
   white-space: nowrap;
   
   > * {
     display: inline-block;
     vertical-align: middle;
+    height: 100%;
+
+    &:last-of-type {
+      .DataGridCellResizer {
+        display: none;
+      }
+    }
   }
 }

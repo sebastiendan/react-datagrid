@@ -1,4 +1,6 @@
 .DataGridCell {
+  position: relative;
+  
   > div {
     padding-right: 5px;
     text-align: left;
@@ -8,23 +10,22 @@
   }
 
   &.cover {
-    width: 5%;
     min-width: 30px;
   }
 
   &.title {
-    width: 35%;
+    min-width: 55px;
   }
-
+  
   &.artist {
-    width: 20%;
+    min-width: 55px;
   }
-
+  
   &.album {
-    width: 30%;
+    min-width: 50px;
   }
-
+  
   &.duration {
-    width: 10%;
+    min-width: 60px;
   }
 }

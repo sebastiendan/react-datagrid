@@ -2,10 +2,12 @@ import * as React from 'react';
 import { MouseEvent } from 'react';
 import { Column } from '../types';
 
+import DataGridCellResizer from '../containers/DataGridCellResizer';
 import './DataGridCell.scss';
 
 export interface Props {
   column: Column;
+  isHeader?: boolean;
   onHeaderClick?: (event: MouseEvent<HTMLDivElement>, columnId: string) => void;
   value: string;
 }
@@ -19,8 +21,13 @@ function DataGridCell(props: Props) {
       };
   
   if (!props.column.type || props.column.type !== 'image') {
-    if (props.onHeaderClick) {
-      content = (<div className="HeaderCell" onClick={handleClick}>{props.value}</div>);
+    if (props.isHeader && props.onHeaderClick) {
+      content = (
+        <div className="HeaderCell" onClick={handleClick}>
+          {props.value}
+          <DataGridCellResizer column={props.column} />
+        </div>
+      );
     } else {
       content = (<div>{props.value}</div>);
     }
@@ -29,7 +36,7 @@ function DataGridCell(props: Props) {
   }
 
   return (
-    <div className={props.column.id + ' DataGridCell'}>
+    <div className={props.column.id + ' DataGridCell'} style={{width: props.column.width + '%'}}>
       {content}
     </div>
   );

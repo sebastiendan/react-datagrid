@@ -44,10 +44,16 @@ export function track(state: StoreState, action: ReactDataGridActions): StoreSta
           return a[action.columnId] > b[action.columnId] ? state.sort.direction : -1 * state.sort.direction;
         }).slice()
       };
-    case constants.SCROLL_PAGE:
+    case constants.RESIZE_COLUMN:
       return { 
         ...state,
-        tracks: []
+        columns: state.columns.map(column => {
+          if (column.id === action.columnId) {
+            column.width = action.width;
+            return Object.assign({}, column);
+          }
+          return column;
+        })
       };
     default:
       return state;

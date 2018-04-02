@@ -1,6 +1,6 @@
 import { SearchAction } from './Search';
 import { TracksAction } from './Tracks';
 import { GridAction } from './Grid';
-import { PageAction } from './Page';
+import { ColumnAction } from './Column';
 
-export type ReactDataGridActions = SearchAction | TracksAction | GridAction | PageAction;
+export type ReactDataGridActions = SearchAction | TracksAction | GridAction | ColumnAction;

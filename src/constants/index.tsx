@@ -16,5 +16,5 @@ export type GET_TRACKS_ERROR = typeof GET_TRACKS_ERROR;
 export const SORT_GRID = 'SORT_GRID';
 export type SORT_GRID = typeof SORT_GRID;
 
-export const SCROLL_PAGE = 'SCROLL_PAGE';
-export type SCROLL_PAGE = typeof SCROLL_PAGE;
+export const RESIZE_COLUMN = 'RESIZE_COLUMN';
+export type RESIZE_COLUMN = typeof RESIZE_COLUMN;

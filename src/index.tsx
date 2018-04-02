@@ -16,23 +16,28 @@ export const store = createStore<StoreState>(
       {
         id: 'cover',
         name: '',
-        type: 'image'
+        type: 'image',
+        width: 5
       },
       {
         id: 'title',
-        name: 'Title'
+        name: 'Title',
+        width: 35
       },
       {
         id: 'artist',
-        name: 'Artist'
+        name: 'Artist',
+        width: 20
       },
       {
         id: 'album',
-        name: 'Album'
+        name: 'Album',
+        width: 30
       },
       {
         id: 'duration',
-        name: 'Duration'
+        name: 'Duration',
+        width: 10
       }
     ],
     error: null,

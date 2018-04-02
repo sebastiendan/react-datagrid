@@ -5,9 +5,10 @@ import DataGridCell, { Props } from '../components/DataGridCell';
 import * as gridActions from '../actions/Grid';
 import StoreState from '../types/';
 
-export function mapStateToProps({ columns }: StoreState, ownProps: Props) {
+export function mapStateToProps({}: StoreState, ownProps: Props) {
   return {
     column: ownProps.column,
+    isHeader: ownProps.isHeader,
     value: ownProps.value
   };
 }

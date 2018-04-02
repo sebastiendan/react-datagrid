@@ -1,6 +1,10 @@
 @import '../_variables';
 
 .DataGrid {
+  position: relative;
+  overflow: auto;
+  text-align: left;
+
   > * {
     &:not(:last-of-type) {
       border-bottom: 1px solid $border;

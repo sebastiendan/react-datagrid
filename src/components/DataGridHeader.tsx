@@ -13,9 +13,10 @@ function DataGridHeader(props: Props) {
   return (
     <div className="DataGridHeader">
       {props.columns && props.columns.map((column) => 
-        <DataGridCell 
+        <DataGridCell
           key={column.id} 
           column={column} 
+          isHeader={true}
           value={column.name} 
         />
       )}
