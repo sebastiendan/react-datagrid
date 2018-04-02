@@ -9,16 +9,26 @@ export function track(state: StoreState, action: ReactDataGridActions): StoreSta
         ...state,
         search: action.search
       };
+    case constants.CLEAR_TRACKS:
+      return { 
+        ...state, 
+        tracks: []
+      };
     case constants.GET_TRACKS_ATTEMPT:
       return { 
         ...state, 
         isLoading: true
       };
     case constants.GET_TRACKS_SUCCESS:
+      const tracks: SimpleTrack[] = action.tracks || [];
+
       return { 
         ...state, 
         isLoading: false,
-        tracks: action.tracks ? action.tracks : []
+        tracks: state.tracks
+          .concat(tracks.filter((item: SimpleTrack) => { 
+            return !state.tracks.find(x => x.id === item.id);
+          }))
       };
     case constants.GET_TRACKS_ERROR:
       return { 
@@ -33,6 +43,11 @@ export function track(state: StoreState, action: ReactDataGridActions): StoreSta
         tracks: state.tracks.sort((a: SimpleTrack, b: SimpleTrack) => {
           return a[action.columnId] > b[action.columnId] ? state.sort.direction : -1 * state.sort.direction;
         }).slice()
+      };
+    case constants.SCROLL_PAGE:
+      return { 
+        ...state,
+        tracks: []
       };
     default:
       return state;

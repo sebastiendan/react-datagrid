@@ -15,7 +15,11 @@ export function mapStateToProps({ search }: StoreState) {
 export function mapDispatchToProps(dispatch: Dispatch<tracksActions.TracksAction | searchActions.SearchAction>) {
   return {
     onSearchChange: (e: ChangeEvent<HTMLInputElement>) => dispatch(searchActions.updateSearch(e.target.value)),
-    onSearchSubmit: (e: FormEvent<HTMLInputElement>) => { e.preventDefault(); dispatch(tracksActions.getTracks()); }
+    onSearchSubmit: (e: FormEvent<HTMLInputElement>) => { 
+      e.preventDefault(); 
+      dispatch(tracksActions.clearTracks()); 
+      dispatch(tracksActions.getTracks()); 
+    }
   };
 }
 

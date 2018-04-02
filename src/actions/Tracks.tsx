@@ -7,9 +7,18 @@ import { Track, SimpleTrack } from '../types';
 import { store } from '..';
 
 export interface GetTracks {
-  type: constants.GET_TRACKS_ATTEMPT | constants.GET_TRACKS_SUCCESS | constants.GET_TRACKS_ERROR;
+  type: constants.CLEAR_TRACKS 
+      | constants.GET_TRACKS_ATTEMPT 
+      | constants.GET_TRACKS_SUCCESS 
+      | constants.GET_TRACKS_ERROR;
   tracks?: SimpleTrack[];
   error?: any;
+}
+
+export function clearTracks(): GetTracks {
+  return { 
+    type: constants.CLEAR_TRACKS
+  };
 }
 
 export function getTracksAttempt(): GetTracks {
@@ -33,13 +42,13 @@ export function getTracksError(err: any): GetTracks {
   };
 }
 
-export function getTracks(): any {
+export function getTracks(index?: number): any {
   const search: string = store.getState().search;
 
   return (dispatch: Dispatch<GetTracks>) => {
     dispatch(getTracksAttempt());
 
-    axios.get('http://localhost:3001/track?search=' + search)
+    axios.get('http://localhost:3001/track?search=' + search + '&index=' + (index || 0))
       .then(res => {
         const tracks: SimpleTrack[] = res.data.data.map((track: Track) => {
           const momentDuration: moment.Duration = moment.duration(track.duration, 's'),

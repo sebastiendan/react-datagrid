@@ -11,7 +11,7 @@ export interface Props {
 
 function DataGrid(props: Props) {
   if (props.rows && !props.rows.length) {
-    return (<div>No data</div>);
+    return (null);
   }
 
   return (
