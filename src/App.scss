@@ -1,9 +1,11 @@
+@import 'variables';
+
 .App {
   text-align: center;
 }
 
 .App-header {
-  background-color: #222;
+  background-color: $primary;
   height: 50px;
   padding: 20px;
   color: white;
@@ -18,5 +20,5 @@
 }
 
 .ErrorMessage {
-  color: red;
+  color: $error;
 }

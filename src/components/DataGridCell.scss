@@ -1,5 +1,8 @@
+@import '../variables';
+
 .DataGridCell {
   position: relative;
+  transition: width .4s ease;
   
   > div {
     padding-right: 5px;
@@ -7,6 +10,34 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .HeaderCell {
+    span {
+      position: relative;
+    }
+    
+    &.Sort span:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 5px);
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 6px solid $grey;
+      transition: transform .28s ease;
+    }
+    
+    &.Sort.Desc span:after {
+      transform: translateY(-50%) rotate(-180deg);
+    }
+  }
+
+  img {
+    border-radius: 3px;
   }
 
   &.cover {

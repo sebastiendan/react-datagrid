@@ -2,9 +2,12 @@ export default interface StoreState {
 
   columns: Column[];
   error: any;
+  filter: Filter;
+  filteredTracks: SimpleTrack[];
+  isFilterVisible: boolean;
   isLoading: boolean;
   search: string;
-  sort: {direction: number, id: string};
+  sort: Sort;
   tracks: SimpleTrack[];
 
 }
@@ -38,7 +41,9 @@ export interface Album {
 export interface SimpleTrack {
 
   album: string;
+  albumId: number;
   artist: string;
+  artistId: number;
   cover: string;
   duration: string;
   id: number;
@@ -46,10 +51,24 @@ export interface SimpleTrack {
 
 }
 
+export interface Sort {
+
+  direction: number;
+  id: string;
+
+}
+
+export interface Filter {
+
+  albums: number[];
+  artists: number[];
+
+}
+
 export interface Cell {
   
-    id: number;
-    value: string | number;
+  id: number;
+  value: string | number;
   
 }
 

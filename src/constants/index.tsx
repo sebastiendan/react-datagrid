@@ -1,6 +1,12 @@
 export const UPDATE_SEARCH = 'UPDATE_SEARCH';
 export type UPDATE_SEARCH = typeof UPDATE_SEARCH;
 
+export const FILTER_TRACKS = 'FILTER_TRACKS';
+export type FILTER_TRACKS = typeof FILTER_TRACKS;
+
+export const TOGGLE_FILTER = 'TOGGLE_FILTER';
+export type TOGGLE_FILTER = typeof TOGGLE_FILTER;
+
 export const CLEAR_TRACKS = 'CLEAR_TRACKS';
 export type CLEAR_TRACKS = typeof CLEAR_TRACKS;
 

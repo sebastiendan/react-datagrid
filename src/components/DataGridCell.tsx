@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { MouseEvent } from 'react';
-import { Column } from '../types';
+import { Column, Sort } from '../types';
 
 import DataGridCellResizer from '../containers/DataGridCellResizer';
 import './DataGridCell.scss';
@@ -9,22 +9,28 @@ export interface Props {
   column: Column;
   isHeader?: boolean;
   onHeaderClick?: (event: MouseEvent<HTMLDivElement>, columnId: string) => void;
+  sort?: Sort;
   value: string;
 }
 
 function DataGridCell(props: Props) {
-  let content: JSX.Element,
+  let classes: string = '',
+      content: JSX.Element,
       handleClick: (event: MouseEvent<HTMLDivElement>) => void = (e: MouseEvent<HTMLDivElement>) => {
         if (props.onHeaderClick) {
           props.onHeaderClick(e, props.column.id);
         }
       };
-  
+      
   if (!props.column.type || props.column.type !== 'image') {
     if (props.isHeader && props.onHeaderClick) {
+      if (props.sort && props.sort.id === props.column.id) {
+        classes = 'Sort ' + (props.sort.direction === 1 ? 'Asc' : 'Desc');
+      }
+      
       content = (
-        <div className="HeaderCell" onClick={handleClick}>
-          {props.value}
+        <div className={'HeaderCell ' + classes} onClick={handleClick}>
+          <span>{props.value}</span>
           <DataGridCellResizer column={props.column} />
         </div>
       );

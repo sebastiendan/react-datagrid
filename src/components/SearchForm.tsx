@@ -11,8 +11,7 @@ function SearchForm(props: Props) {
   return (
     <form onSubmit={props.onSearchSubmit}>
       <label>
-        Name:
-        <input type="text" value={props.search} onChange={props.onSearchChange}/>
+        <input placeholder="Search" type="text" value={props.search} onChange={props.onSearchChange}/>
       </label>
       <input type="submit" value="Search"/>
     </form>

@@ -5,10 +5,11 @@ import DataGridCell, { Props } from '../components/DataGridCell';
 import * as gridActions from '../actions/Grid';
 import StoreState from '../types/';
 
-export function mapStateToProps({}: StoreState, ownProps: Props) {
+export function mapStateToProps({ sort }: StoreState, ownProps: Props) {
   return {
     column: ownProps.column,
     isHeader: ownProps.isHeader,
+    sort: sort,
     value: ownProps.value
   };
 }

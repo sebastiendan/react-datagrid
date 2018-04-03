@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import DataGrid from '../components/DataGrid';
 import StoreState from '../types/';
 
-export function mapStateToProps({ tracks }: StoreState) {
+export function mapStateToProps({ filteredTracks }: StoreState) {
   return {
-    rows: tracks
+    rows: filteredTracks
   };
 }
 

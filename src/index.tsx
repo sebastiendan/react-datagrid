@@ -41,9 +41,12 @@ export const store = createStore<StoreState>(
       }
     ],
     error: null,
+    isFilterVisible: false,
     isLoading: false,
     search: 'Foo fighters',
     sort: {direction: -1, id: ''},
+    filter: {artists: [], albums: []},
+    filteredTracks: [],
     tracks: []
   }, 
   applyMiddleware(thunk));

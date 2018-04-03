@@ -1,0 +1,70 @@
+@import '../variables';
+
+.FilterWrapper {
+  text-align: left;
+  margin: 10px;
+}
+
+.FilterToggle {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 5px);
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 6px solid $grey;
+    transition: transform .28s ease;
+  }
+
+  &.Open:after {
+    transform: translateY(-50%) rotate(90deg);
+  }
+}
+
+.FilterForm {  
+  background-color: $background;
+}
+
+.ArtistWrapper {
+  margin: 5px;
+  background-color: #fff;
+  border: 1px solid $border;
+}
+
+.ArtistWrapper, .AlbumWrapper {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.Filter {
+  display: inline-block;
+  margin: 4px;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px solid $border;
+  cursor: pointer;
+  transition: all .18s ease;
+  
+  > * {
+    display: inline-block;
+    vertical-align: middle;    
+  }
+
+  img {
+    border-radius: 3px;
+    margin-right: 4px;
+  }
+}
+
+input:checked + .Filter {
+  color: #fff;
+  background-color: $accent;
+}

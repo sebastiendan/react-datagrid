@@ -3,6 +3,7 @@ import * as React from 'react';
 import DataGrid from './containers/DataGrid';
 import InfiniteScroll from './components/InfiniteScroll';
 import SearchForm from './containers/SearchForm';
+import FilterForm from './containers/FilterForm';
 import './App.scss';
 
 export interface Props {
@@ -21,6 +22,7 @@ function App(props: Props) {
       </header>
       <InfiniteScroll />
       <SearchForm />
+      <FilterForm />
       {props.error &&
         <div className="ErrorMessage">
           Something went wrong: {props.error.response ? props.error.response.data.message : props.error.message}

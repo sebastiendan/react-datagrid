@@ -9,9 +9,33 @@ export function track(state: StoreState, action: ReactDataGridActions): StoreSta
         ...state,
         search: action.search
       };
+    case constants.TOGGLE_FILTER:
+      return { 
+        ...state,
+        isFilterVisible: !state.isFilterVisible
+      };
+    case constants.FILTER_TRACKS:
+      return { 
+        ...state, 
+        filter: Object.assign({}, action.filter) || {albums: [], artists: []},
+        filteredTracks: state.tracks.filter((item: SimpleTrack) => {
+          let artistFilter: boolean = true,
+              albumFilter: boolean = true;
+
+          if (action.filter && action.filter.artists && action.filter.artists.length) {
+            artistFilter = action.filter.artists.indexOf(item.artistId) > -1;
+          }
+          if (action.filter && action.filter.albums && action.filter.albums.length) {
+            albumFilter = action.filter.albums.indexOf(item.albumId) > -1;
+          }
+
+          return artistFilter && albumFilter;
+        })
+      };
     case constants.CLEAR_TRACKS:
       return { 
         ...state, 
+        filteredTracks: [],
         tracks: []
       };
     case constants.GET_TRACKS_ATTEMPT:
@@ -20,15 +44,20 @@ export function track(state: StoreState, action: ReactDataGridActions): StoreSta
         isLoading: true
       };
     case constants.GET_TRACKS_SUCCESS:
-      const tracks: SimpleTrack[] = action.tracks || [];
+      const tracks: SimpleTrack[] = action.tracks ? 
+        state.tracks
+          .concat(action.tracks.filter((item: SimpleTrack) => { 
+            return !state.tracks.find(x => x.id === item.id);
+          }))
+        : 
+        [];            
 
       return { 
         ...state, 
         isLoading: false,
-        tracks: state.tracks
-          .concat(tracks.filter((item: SimpleTrack) => { 
-            return !state.tracks.find(x => x.id === item.id);
-          }))
+        filter: {albums: [], artists: []},
+        filteredTracks: tracks,
+        tracks: tracks
       };
     case constants.GET_TRACKS_ERROR:
       return { 
@@ -40,7 +69,7 @@ export function track(state: StoreState, action: ReactDataGridActions): StoreSta
       return { 
         ...state,
         sort: {id: action.columnId, direction: -1 * state.sort.direction}, 
-        tracks: state.tracks.sort((a: SimpleTrack, b: SimpleTrack) => {
+        filteredTracks: state.tracks.sort((a: SimpleTrack, b: SimpleTrack) => {
           return a[action.columnId] > b[action.columnId] ? state.sort.direction : -1 * state.sort.direction;
         }).slice()
       };
